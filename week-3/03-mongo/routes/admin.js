@@ -1,44 +1,58 @@
 const { Router } = require("express");
 const adminMiddleware = require("../middleware/admin");
 const { Admin, Course } = require("../db/index");
+const { zStr, zNum, zBol } = require("../index");
 const router = Router();
 
 // Admin Routes
 router.post("/signup", async (req, res) => {
   // Implement admin signup logic
+  const username = zStr.safeParse(req.body.username);
+  const password = zStr.safeParse(req.body.password);
 
-  const existingAdmin = await Admin.findOne({ username: req.body.username });
+  const existingAdmin = await Admin.findOne({ username });
   if (existingAdmin) return res.send(400, { message: "Admin Already Exists" });
 
-  const admin = new Admin({
-    username: req.body.username,
-    password: req.body.password,
-  });
+  Admin.create({ username, password })
+    .then(() => {
+      res.send(201, { message: "Admin created successfully" });
+    })
+    .catch(() => {
+      res.send(503, { message: "Something went wrong" });
+    });
 
+  /*
+  const admin = new Admin({ username, password });
   try {
     admin.save();
     res.send(201, { message: "Admin created successfully" });
   } catch (e) {
     res.send(503, { message: "Something went wrong" });
   }
+  */
 });
 
 router.post("/courses", adminMiddleware, async (req, res) => {
   // Implement course creation logic
-  const course = new Course({
-    title: req.body.title,
-    description: req.body.description,
-    price: req.body.price,
-    imageLink: req.body.imageLink,
-    createdBy: req.headers.username,
-    published: true,
-  });
+  const title = zStr.safeParse(req.body.title);
+  const description = zStr.safeParse(req.body.description);
+  const price = zNum.safeParse(req.body.price);
+  const imageLink = zStr.safeParse(req.body.imageLink);
+  const createdBy = zStr.safeParse(req.headers.username);
+  const published = zBol.safeParse(true);
 
-  const savedCourse = await course.save();
+  const courseId = await Course.create({
+    title,
+    description,
+    price,
+    imageLink,
+    createdBy,
+    published,
+  });
 
   res.send(201, {
     message: "Course created successfully",
-    courseId: savedCourse._id,
+    courseId: courseId._id,
   });
 });
 
