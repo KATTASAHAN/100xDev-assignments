@@ -37,9 +37,8 @@ router.post("/signin", async (req, res) => {
 
 router.post("/courses", adminMiddleware, async (req, res) => {
   // Implement course creation logic
-  const token = req.headers.authorization.replace("Bearer ", "");
-  const decodedToken = jwt.decode(token);
-  const admin = await Admin.findOne({ username: decodedToken.username });
+
+  const admin = await Admin.findOne({ username: req.username });
 
   const course = new Course({
     title: req.body.title,

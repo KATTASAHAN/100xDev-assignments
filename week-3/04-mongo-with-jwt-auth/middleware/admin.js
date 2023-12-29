@@ -9,7 +9,7 @@ function adminMiddleware(req, res, next) {
   if (!token) return res.send(404, { message: "Token not found" });
   try {
     token = token.replace("Bearer ", "");
-    jwt.verify(token, jwtPassword);
+    req.username = jwt.verify(token, jwtPassword);
     next();
   } catch (e) {
     return res.send(401, { message: "Invalid Token" });

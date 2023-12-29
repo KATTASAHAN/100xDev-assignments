@@ -10,7 +10,7 @@ function userMiddleware(req, res, next) {
 
   token = token.replace("Bearer ", "");
   try {
-    jwt.verify(token, jwtPassword);
+    req.username = jwt.verify(token, jwtPassword);
     next();
   } catch (e) {
     res.send(401, { message: "Invalid Token" });
