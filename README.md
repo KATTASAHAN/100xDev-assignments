@@ -1,6 +1,7 @@
 # Tech Used
 
 <ol>
+<li>React</li>
 <li>JavaScript</li>
 <li>Node</li>
 <li>Express (with middlewares)</li>
