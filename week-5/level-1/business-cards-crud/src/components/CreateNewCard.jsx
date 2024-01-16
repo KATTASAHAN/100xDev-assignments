@@ -28,7 +28,11 @@ const CreateNewCard = () => {
         >
           <div className="form-field">
             <label htmlFor="name">Name</label>
-            <input type="text" />
+            <input type="text" className="input-style" />
+          </div>
+          <div className="form-field">
+            <label htmlFor="description">Description</label>
+            <textarea type="text" className="input-style" />
           </div>
         </div>
       )}
