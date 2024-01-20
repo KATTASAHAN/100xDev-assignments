@@ -1,20 +1,33 @@
-import { useState } from "react";
+import { Suspense, lazy, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
-import Dashboard from "./components/Dashboard";
-import Landing from "./components/Landing";
 import Navbar from "./components/Navbar";
 
-function App() {
-  const [count, setCount] = useState(0);
+const Landing = lazy(() => import("./components/Landing"));
+const Dashboard = lazy(() => import("./components/Dashboard"));
 
+function App() {
   return (
     <>
-      <Navbar />
       <BrowserRouter>
+        <Navbar />
         <Routes>
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/landing" element={<Landing />} />
+          <Route
+            path="/"
+            element={
+              <Suspense fallback={"loading..."}>
+                <Landing />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/dashboard"
+            element={
+              <Suspense fallback={"loading..."}>
+                <Dashboard />
+              </Suspense>
+            }
+          />
         </Routes>
       </BrowserRouter>
     </>
