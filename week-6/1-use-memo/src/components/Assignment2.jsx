@@ -37,7 +37,7 @@ export function Assignment2() {
 
   let filteredSentences = useMemo(() => {
     return sentences.filter((x) => x.includes(filter));
-  }, [filter]);
+  }, [sentences, filter]);
 
   return (
     <div>

@@ -6,8 +6,20 @@ const Navbar = () => {
   return (
     <>
       <div>NAV BAR</div>
-      <button onClick={() => navigate("/")}>Landing</button>
-      <button onClick={() => navigate("/dashboard")}>Dashboard</button>
+      <button
+        onClick={() => {
+          navigate("/");
+        }}
+      >
+        Landing
+      </button>
+      <button
+        onClick={() => {
+          navigate("/dashboard");
+        }}
+      >
+        Dashboard
+      </button>
     </>
   );
 };
