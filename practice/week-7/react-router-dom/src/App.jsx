@@ -1,9 +1,7 @@
-import { Suspense, lazy, useState } from "react";
+import React, { Suspense, lazy } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
-import React, { useState } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import "./App.css";
+
 import Landing from "./components/Landing";
 import Navbar from "./components/Navbar";
 
